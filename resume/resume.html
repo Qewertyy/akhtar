@@ -1,0 +1,104 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Akhtar Khan - Resume</title>
+<style>
+  @font-face { font-family: Carlito; src: url(fonts/Carlito-Regular.ttf); font-weight: 400; }
+  @font-face { font-family: Carlito; src: url(fonts/Carlito-Bold.ttf); font-weight: 700; }
+  @page { size: A4; margin: 0.8in 1in 0.8in 1in; }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font: 11pt/1.3 Carlito, Calibri, sans-serif; color: #000; }
+  a { color: #1155cc; }
+  h1 { font-size: 26pt; font-weight: 400; text-align: center; line-height: 1.2; }
+  .contact { text-align: center; margin-bottom: 2pt; }
+  h2 { font-size: 14pt; font-weight: 400; border-bottom: 1px solid #000; margin: 9pt 0 3pt; line-height: 1.25; break-after: avoid; }
+  .row { display: flex; justify-content: space-between; gap: 12pt; break-after: avoid; }
+  .entry + .entry { margin-top: 7pt; }
+  ul { list-style: none; }
+  li { padding-left: 17pt; position: relative; }
+  li::before { content: "\25CF"; font-family: Arial, sans-serif; font-size: 9pt; position: absolute; left: 3pt; top: 1pt; }
+  .entry { break-inside: avoid; }
+</style>
+</head>
+<body>
+<h1>Akhtar Khan</h1>
+<p class="contact"><a href="tel:+919321674183">+91-9321674183</a> | <a href="mailto:akhtar.khn.irl@gmail.com">akhtar.khn.irl@gmail.com</a> | <a href="https://qewertyy.dev">qewertyy.dev</a> | <a href="https://github.com/qewertyy">github.com/qewertyy</a></p>
+
+<h2>About me</h2>
+<p><b>Founding Backend Engineer</b> with 4+ years of building products at early-stage startups, currently building the backend of Ryvn and going down into native iOS and Android code wherever a feature reaches the phone. A background in application security (CISC, API penetration testing) shapes how I design auth and data access. Endlessly curious, from game development to offensive security and cloud infrastructure, and looking for a startup where I can own hard problems and keep learning.</p>
+
+<h2>Skills</h2>
+<p><b>Languages:</b> Go, TypeScript/JavaScript, Python, C#, Rust, Swift, Kotlin, Java, SQL, Ruby, PHP</p>
+<p><b>Backend:</b> Node.js, Bun, Deno, Express, Hono, Fastify, Echo, ASP.NET Core, Django, Flask, gRPC/Protobuf, REST, WebSockets, Socket.IO, Stripe, Razorpay</p>
+<p><b>Web &amp; Mobile:</b> React, Next.js, Remix, Nuxt, Tailwind, React Native, Expo, SwiftUI, Live Activities, APNs/FCM push</p>
+<p><b>Data &amp; Infra:</b> PostgreSQL, MySQL, SQL Server, MongoDB, DynamoDB, Redis, Qdrant, Neo4j, Elasticsearch, Docker, AWS, GCP, Cloudflare, Nginx, Temporal, BullMQ, Kafka</p>
+<p><b>AI &amp; Automation:</b> LLM agents (Mastra), tool calling, MCP, RAG, Stable Diffusion, Playwright, Puppeteer, Cheerio, Telegram bots</p>
+<p><b>Security:</b> VAPT, API penetration testing, OAuth/JWT, Burp Suite, Metasploit, Wireshark, Frida, reverse engineering, AES</p>
+
+<h2>Experience</h2>
+<div class="entry">
+<div class="row"><span><b>Founding Backend Engineer,</b> ZanEvra Inc. (Ryvn) – New York, USA</span><span>Jun 2026 – Present</span></div>
+<ul>
+  <li>Building the backend of <b>Ryvn</b>, an AI assistant that acts across email, calendar, messages and the phone, spanning <b>backend services</b>, the agent runtime and native iOS/Android code.</li>
+  <li>Cut chat start-up latency by running history, summary and memory reads <b>in parallel</b> instead of one after another (previously 1–2s), and added a per-user <b>LRU/TTL cache</b> for tool clients with cleanup kept off the request path.</li>
+  <li>Designed <b>Live Activities</b> and Android ongoing notifications as <b>idempotent full-state pushes</b> that recover from dropped or reordered APNs/FCM messages, within a 3.3 KB payload budget, plus streaming voice replies from the lock screen.</li>
+  <li>Replaced expiring file links with an authorized <b>streaming file service</b> and immutable long-lived caching. Added per-user prompt caching and <b>abuse protection</b>.</li>
+</ul>
+</div>
+<div class="entry">
+<div class="row"><span><b>Full-Stack Engineer,</b> Infloso AI – Gurgaon, Haryana</span><span>Sep 2024 – May 2026</span></div>
+<ul>
+  <li>Designed and implemented the end-to-end <b>execute/campaign/collab module</b> connecting brands with creators and influencers.</li>
+  <li>Developed <b>AI workflows</b> for automatic content generation, brand and social-media scraping, ad integrations and sentiment analysis.</li>
+  <li>Built modular systems with <b>resilient scraping infrastructure</b>, integrated LLMs, and background processing on queues.</li>
+</ul>
+</div>
+<div class="entry">
+<div class="row"><span><b>Software Engineer,</b> Finportal – Surat, Gujarat</span><span>Sep 2023 – Aug 2024</span></div>
+<ul>
+  <li>Developed full-stack web applications including <b>investment-factory</b> and <b>loanshop</b>, with real-time dashboards and admin modules.</li>
+  <li>Integrated <b>payment gateways</b>, user auth flows, CMS-style admin panels and custom business logic.</li>
+  <li>Delivered maintainable, production-grade features under tight timelines.</li>
+</ul>
+</div>
+
+<h2>Projects</h2>
+<div class="entry">
+<div class="row"><span><b>Gigdash</b> – Two-sided local-services marketplace</span><a href="https://qewertyy.dev/work/gigdash">qewertyy.dev/work/gigdash</a></div>
+<ul>
+  <li><b>Location-aware dispatch</b> that searches outward from each order in widening rings until a provider accepts, notifying each provider only once.</li>
+  <li><b>Payments, payouts and wallets</b> built so retries never double-charge or double-pay, plus live order tracking, chat and prioritized background jobs.</li>
+</ul>
+</div>
+<div class="entry">
+<div class="row"><span><b>Futti</b> – Football social and event platform</span><a href="https://qewertyy.dev/work/futti">qewertyy.dev/work/futti</a></div>
+<ul>
+  <li>Delivered in <b>45 days</b>: React Native app and Go backend with events, rosters and location-based discovery.</li>
+  <li>Real-time chat built on <b>Go concurrency</b> that drops slow clients instead of blocking and pushes to offline users. Third-party lookups are cached by source.</li>
+</ul>
+</div>
+<div class="entry">
+<div class="row"><span><b>TogetherIV</b> – Community for people in IV treatment</span><a href="https://qewertyy.dev/work/togetheriv">qewertyy.dev/work/togetheriv</a></div>
+<ul>
+  <li>Real-time <b>multiplayer games</b> and scheduled live trivia, with real-time, scheduled and background work in separate processes.</li>
+  <li>Kept <b>Apple and Google in-app purchases</b> in sync with treatment-pass access and expiry.</li>
+</ul>
+</div>
+<div class="entry">
+<div class="row"><span><b>Cardinal Prophecy</b></span><a href="https://github.com/qewertyy/cardinal-prophecy">github.com/qewertyy/cardinal-prophecy</a></div>
+<ul>
+  <li>Heart-attack risk screening app in <b>ASP.NET Core MVC</b> (.NET 6). It scores cholesterol, blood pressure and sugar readings through SQL Server stored procedures and keeps each user's history.</li>
+  <li>Role-based access (user/admin), emailed one-time passwords, expiring reset links and encrypted record IDs, with data access split into its own service library.</li>
+</ul>
+</div>
+
+<h2>Education</h2>
+<div class="row"><span><b>University of Mumbai</b> – B.Sc. in Computer Science</span><span>April 2023</span></div>
+<div class="row"><span><b>Institute of Information Security</b> – Certified Information Security Consultant (CISC)</span><span>June 2024</span></div>
+
+<h2>Certifications</h2>
+<p><b>SQL (Advanced)</b> – <a href="https://www.hackerrank.com/certificates/78ae9dc1525e">HackerRank</a></p>
+<p><b>API Penetration Testing</b> – APIsec University</p>
+</body>
+</html>

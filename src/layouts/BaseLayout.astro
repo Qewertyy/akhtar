@@ -1,0 +1,173 @@
+---
+import { ClientRouter } from "astro:transitions";
+import "../styles/global.css";
+import { email, github, projects, resume } from "../data/portfolio";
+
+interface Props {
+  title: string;
+  description: string;
+}
+
+const { title: rawTitle, description: rawDescription } = Astro.props;
+const title = rawTitle.toLowerCase();
+const description = rawDescription.toLowerCase();
+const canonical = new URL(Astro.url.pathname, "https://qewertyy.dev");
+
+const commands = [
+  ...projects.map((p) => ({ label: p.name, hint: p.kind, group: "Work", href: `/work/${p.slug}/` })),
+  { label: "Home", hint: "", group: "Go to", href: "/" },
+  // { label: "Highlights", hint: "", group: "Go to", href: "/#highlights" },
+  { label: "Experience", hint: "", group: "Go to", href: "/#experience" },
+  { label: "Languages & tools", hint: "", group: "Go to", href: "/#tools" },
+  { label: "Copy email", hint: email, group: "Contact", action: "copy" },
+  { label: "Resume", hint: "PDF", group: "Contact", href: resume },
+  { label: "GitHub", hint: "@qewertyy", group: "Contact", href: github },
+  { label: "Toggle theme", hint: "", group: "Settings", action: "theme" },
+];
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content={description} />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonical} />
+    <link rel="canonical" href={canonical} />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500&family=Geist+Mono&display=swap" rel="stylesheet" />
+    <title>{title}</title>
+    <script is:inline>
+      try { const t = localStorage.getItem("theme"); if (t) document.documentElement.dataset.theme = t; } catch {}
+    </script>
+    <ClientRouter />
+  </head>
+  <body>
+    <main>
+      <slot />
+    </main>
+
+    <button class="k-hint" type="button" data-open-k aria-label="Open command menu" transition:persist>
+      <kbd>⌘</kbd><kbd>K</kbd>
+    </button>
+
+    <dialog class="k" aria-label="Command menu" transition:persist>
+      <input type="text" placeholder="Search or jump to…" aria-label="Search commands" autocomplete="off" spellcheck="false" />
+      <ul role="listbox">
+        {
+          commands.map((c) => (
+            <li role="option" data-href={c.href} data-action={c.action} data-group={c.group}>
+              <span>{c.label}</span>
+              <small>{c.hint}</small>
+            </li>
+          ))
+        }
+      </ul>
+    </dialog>
+
+    <div class="toast" role="status" aria-live="polite" transition:persist></div>
+
+    <script>
+      import { navigate } from "astro:transitions/client";
+
+      const dialog = document.querySelector<HTMLDialogElement>("dialog.k")!;
+      const input = dialog.querySelector("input")!;
+      const items = [...dialog.querySelectorAll<HTMLLIElement>("li")];
+      const toast = document.querySelector<HTMLElement>(".toast")!;
+      let active = 0;
+      let toastTimer = 0;
+
+      const visible = () => items.filter((i) => !i.hidden);
+
+      function highlight(n: number) {
+        const list = visible();
+        items.forEach((i) => i.setAttribute("aria-selected", "false"));
+        if (!list.length) return;
+        active = (n + list.length) % list.length;
+        list.forEach((i, idx) => i.setAttribute("aria-selected", String(idx === active)));
+        list[active].scrollIntoView({ block: "nearest" });
+      }
+
+      function open() {
+        input.value = "";
+        items.forEach((i) => (i.hidden = false));
+        dialog.showModal();
+        highlight(0);
+      }
+
+      function showToast(text: string) {
+        toast.textContent = text;
+        toast.classList.add("on");
+        clearTimeout(toastTimer);
+        toastTimer = window.setTimeout(() => toast.classList.remove("on"), 1600);
+      }
+
+      async function copyEmail(address: string) {
+        try {
+          await navigator.clipboard.writeText(address);
+          showToast("Email copied");
+        } catch {
+          location.href = `mailto:${address}`;
+        }
+      }
+
+      function toggleTheme() {
+        const root = document.documentElement;
+        const dark = root.dataset.theme
+          ? root.dataset.theme === "dark"
+          : matchMedia("(prefers-color-scheme: dark)").matches;
+        root.dataset.theme = dark ? "light" : "dark";
+        try { localStorage.setItem("theme", root.dataset.theme); } catch {}
+      }
+
+      function run(item: HTMLLIElement) {
+        dialog.close();
+        const { href, action } = item.dataset;
+        if (action === "copy") return copyEmail(item.querySelector("small")!.textContent!);
+        if (action === "theme") return toggleTheme();
+        if (href!.endsWith(".pdf") || href!.startsWith("http")) return window.open(href, "_blank");
+        navigate(href!);
+      }
+
+      document.addEventListener("keydown", (e) => {
+        if ((e.metaKey || e.ctrlKey) && e.key.toLowerCase() === "k") {
+          e.preventDefault();
+          dialog.open ? dialog.close() : open();
+        }
+      });
+
+      input.addEventListener("input", () => {
+        const q = input.value.trim().toLowerCase();
+        items.forEach((i) => (i.hidden = !i.textContent!.toLowerCase().includes(q)));
+        highlight(0);
+      });
+
+      dialog.addEventListener("keydown", (e) => {
+        if (e.key === "ArrowDown") { e.preventDefault(); highlight(active + 1); }
+        if (e.key === "ArrowUp") { e.preventDefault(); highlight(active - 1); }
+        if (e.key === "Enter") { const item = visible()[active]; if (item) run(item); }
+      });
+
+      dialog.addEventListener("click", (e) => {
+        if (e.target === dialog) return dialog.close();
+        const item = (e.target as HTMLElement).closest("li");
+        if (item) run(item);
+      });
+
+      items.forEach((item) =>
+        item.addEventListener("mousemove", () => highlight(visible().indexOf(item))),
+      );
+
+      document.addEventListener("click", (e) => {
+        const el = (e.target as HTMLElement).closest<HTMLElement>("[data-open-k], [data-copy]");
+        if (!el) return;
+        e.preventDefault();
+        el.dataset.copy ? copyEmail(el.dataset.copy) : open();
+      });
+    </script>
+  </body>
+</html>

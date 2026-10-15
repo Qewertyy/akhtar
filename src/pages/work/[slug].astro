@@ -1,0 +1,95 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import { projects, type Project } from "../../data/portfolio";
+
+export function getStaticPaths() {
+    return projects.map((project, i) => ({
+        params: { slug: project.slug },
+        props: { project, next: projects[(i + 1) % projects.length] },
+    }));
+}
+
+interface Props {
+    project: Project;
+    next: Project;
+}
+
+const { project: p, next } = Astro.props;
+---
+
+<BaseLayout title={`${p.name} · Akhtar Khan`} description={p.blurb}>
+    <a class="back muted fade" style="--i:0" href="/">
+        ← Akhtar Khan
+    </a>
+
+    <header class="intro fade" style="--i:0">
+        <img class="app-icon" src={p.icon} alt={`${p.name} app icon`} width="56" height="56" />
+        <h1 transition:name={`title-${p.slug}`}>{p.name}</h1>
+        <p class="muted">
+            {p.kind} · {p.role}
+        </p>
+        <p class="stats mono muted">
+            {p.stack.map((x) => <span>{x}</span>)}
+        </p>
+    </header>
+
+    <section class="fade" style="--i:1">
+        <p>{p.intro}</p>
+    </section>
+
+    {p.images[0] && (
+        <figure class="shot fade" style="--i:2">
+            <img
+                src={p.images[0].src}
+                alt={p.images[0].alt}
+                width={p.images[0].width}
+                height={p.images[0].height}
+            />
+        </figure>
+    )}
+
+    <section class="fade" style="--i:3" aria-labelledby="did">
+        <h2 id="did">Under the hood</h2>
+        <ul class="plain dashes">
+            {p.did.map((d) => (
+                <li>{d}</li>
+            ))}
+        </ul>
+    </section>
+
+    {/* highlights hidden for now
+    <section class="fade" style="--i:4" aria-labelledby="hard">
+        <h2 id="hard">Highlights</h2>
+        {p.highlights.map((h) => (
+            <article class="note">
+                <h3>{h.title}</h3>
+                <p>{h.body}</p>
+            </article>
+        ))}
+    </section>
+    */}
+
+    {p.images.length > 1 && (
+        <section class="gallery">
+            {p.images.slice(1).map((img) => (
+                <figure class="shot">
+                    <img
+                        src={img.src}
+                        alt={img.alt}
+                        width={img.width}
+                        height={img.height}
+                        loading="lazy"
+                    />
+                </figure>
+            ))}
+        </section>
+    )}
+
+
+    <nav class="next" aria-label="Next project">
+        <span class="muted small">Next</span>
+        <a href={`/work/${next.slug}/`}>
+            {next.name} <span class="muted">· {next.kind}</span> →
+        </a>
+    </nav>
+</BaseLayout>

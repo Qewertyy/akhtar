@@ -1,0 +1,252 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import {
+    certs,
+    domains,
+    email,
+    experience,
+    github,
+    projects,
+    resume,
+    side,
+    stats,
+    tools,
+} from "../data/portfolio";
+
+const highlights = projects.flatMap((p) =>
+    p.highlights
+        .slice(0, p.slug === "ryvn" ? 3 : 1)
+        .map((h) => ({ ...h, project: p })),
+);
+---
+
+<BaseLayout
+    title="Akhtar Khan"
+    description="Founding backend engineer at Ryvn. I build AI agents, real-time apps and the backends behind them."
+>
+    <header class="intro fade" style="--i:0">
+        <h1>Akhtar Khan</h1>
+        <p class="muted">
+            Founding backend engineer at <a href="/work/ryvn/">Ryvn</a>
+        </p>
+        <p class="stats mono muted">
+            {stats.map((x) => <span>{x}</span>)}
+        </p>
+    </header>
+
+    <section class="fade" style="--i:1">
+        <p>
+            I'm a backend engineer working on distributed services, AI agents
+            and real-time systems, mostly in Go, TypeScript and Python. I care
+            about latency, clear boundaries between services, and going down
+            to the native layer when a feature needs it.
+        </p>
+        <p>
+            I'm currently a founding engineer at Ryvn. Before that I worked at
+            Infloso AI and Finportal, and built a few products on the side. A
+            background in application security keeps auth and abuse cases in
+            the design from the start.
+        </p>
+        <p>
+            Outside of work I keep picking up new things. I've made small games
+            in Unity, spent time on the offensive side of security, and gone
+            deep on cloud infrastructure. Learning is the part of this job I
+            enjoy most.
+        </p>
+        <p class="status">
+            <span class="dot" aria-hidden="true"></span>
+            Open to early-stage startup roles · Mumbai,{" "}
+            <time class="clock">--:--</time> IST
+        </p>
+    </section>
+
+    <section class="fade" style="--i:2" aria-labelledby="work">
+        <h2 id="work">Work</h2>
+        <ul class="rows work">
+            {projects.map((p) => (
+                <li>
+                    <a href={`/work/${p.slug}/`} data-preview={p.preview}>
+                        <span class="name">
+                            <img class="icon" src={p.icon} alt="" width="20" height="20" />
+                            <span transition:name={`title-${p.slug}`}>{p.name}</span>
+                        </span>
+                        <span class="muted">{p.kind}</span>
+                    </a>
+                </li>
+            ))}
+        </ul>
+    </section>
+
+    <section class="fade" style="--i:3" aria-labelledby="domains">
+        <h2 id="domains">Domains</h2>
+        <ul class="rows">
+            {domains.map((d) => (
+                <li>
+                    <div class="line">
+                        <span class="name">{d.name}</span>
+                        <span class="muted">{d.tags}</span>
+                    </div>
+                </li>
+            ))}
+        </ul>
+    </section>
+
+    {/* highlights hidden for now
+    <section class="fade" style="--i:3" aria-labelledby="highlights">
+        <h2 id="highlights">Highlights</h2>
+        <div class="stack">
+            {highlights.map((h) => (
+                <details>
+                    <summary>
+                        <span>{h.title}</span>
+                        <span class="muted">{h.project.name}</span>
+                    </summary>
+                    <div class="body">
+                        <p>{h.body}</p>
+                        <a class="more" href={`/work/${h.project.slug}/`}>
+                            More on {h.project.name} →
+                        </a>
+                    </div>
+                </details>
+            ))}
+        </div>
+    </section>
+    */}
+
+    <section class="fade" style="--i:4" aria-labelledby="experience">
+        <h2 id="experience">Experience</h2>
+        <div class="stack">
+            {experience.map((e) => (
+                <details>
+                    <summary>
+                        <span>
+                            {e.company} <span class="muted">· {e.role}</span>
+                        </span>
+                        <span class="muted mono">{e.period}</span>
+                    </summary>
+                    <ul class="body points">
+                        {e.points.map((pt) => (
+                            <li>{pt}</li>
+                        ))}
+                    </ul>
+                </details>
+            ))}
+        </div>
+    </section>
+
+    <section class="fade" style="--i:5" aria-labelledby="tools">
+        <h2 id="tools">Languages & tools</h2>
+        <dl class="tools">
+            {tools.map((t) => (
+                <div>
+                    <dt>{t.group}</dt>
+                    <dd class="muted">{t.items}</dd>
+                </div>
+            ))}
+        </dl>
+    </section>
+
+    <section class="fade" style="--i:5" aria-labelledby="side">
+        <h2 id="side">On the side</h2>
+        <ul class="rows">
+            {side.map((s) => (
+                <li>
+                    <a href={s.href} target="_blank" rel="noreferrer">
+                        <span class="name">
+                            {s.name} <span class="arrow">↗</span>
+                        </span>
+                        <span class="muted">{s.desc}</span>
+                    </a>
+                </li>
+            ))}
+        </ul>
+    </section>
+
+    <section class="fade" style="--i:6" aria-labelledby="creds">
+        <h2 id="creds">Education & security</h2>
+        <ul class="plain muted">
+            {certs.map((c) => (
+                <li>{c}</li>
+            ))}
+        </ul>
+    </section>
+
+    <section class="fade" style="--i:7" aria-labelledby="contact">
+        <h2 id="contact">Contact</h2>
+        <p>
+            The best way to reach me is <a href={`mailto:${email}`} data-copy={email}>email</a>.
+            You can also find me on <a href={github} target="_blank" rel="noreferrer">GitHub</a>
+            or read my <a href={resume} target="_blank">resume</a>.
+        </p>
+    </section>
+
+    <img class="preview" alt="" aria-hidden="true" />
+
+    <script>
+        function clock() {
+            const el = document.querySelector(".clock");
+            if (!el) return;
+            const tick = () =>
+                (el.textContent = new Intl.DateTimeFormat("en-US", {
+                    timeZone: "Asia/Kolkata",
+                    hour: "numeric",
+                    minute: "2-digit",
+                }).format(new Date()));
+            tick();
+            const id = setInterval(tick, 15_000);
+            document.addEventListener(
+                "astro:before-swap",
+                () => clearInterval(id),
+                { once: true },
+            );
+        }
+
+        function preview() {
+            const img = document.querySelector<HTMLImageElement>(".preview");
+            if (
+                !img ||
+                !matchMedia("(hover: hover) and (pointer: fine)").matches
+            )
+                return;
+            let x = 0,
+                y = 0,
+                cx = 0,
+                cy = 0,
+                raf = 0;
+            const loop = () => {
+                cx += (x - cx) * 0.18;
+                cy += (y - cy) * 0.18;
+                img.style.translate = `${cx}px ${cy}px`;
+                raf = requestAnimationFrame(loop);
+            };
+            document
+                .querySelectorAll<HTMLAnchorElement>("[data-preview]")
+                .forEach((a) => {
+                    a.addEventListener("mouseenter", (e) => {
+                        img.src = a.dataset.preview!;
+                        img.classList.toggle("is-icon", img.src.includes("/icon."));
+                        if (!raf) {
+                            cx = x = e.clientX + 24;
+                            cy = y = e.clientY - 80;
+                            loop();
+                        }
+                        img.classList.add("on");
+                    });
+                    a.addEventListener("mousemove", (e) => {
+                        x = e.clientX + 24;
+                        y = e.clientY - 80;
+                    });
+                    a.addEventListener("mouseleave", () => {
+                        img.classList.remove("on");
+                        cancelAnimationFrame(raf);
+                        raf = 0;
+                    });
+                });
+        }
+
+        document.addEventListener("astro:page-load", () => {
+            clock();
+            preview();
+        });
+    </script>
+</BaseLayout>
