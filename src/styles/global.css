@@ -37,6 +37,10 @@
 button, input { text-transform: inherit; }
 
 html { interpolate-size: allow-keywords; -webkit-text-size-adjust: 100%; }
+@media (prefers-reduced-motion: no-preference) {
+  html { scroll-behavior: smooth; }
+}
+h2[id] { scroll-margin-top: 32px; }
 
 body {
   margin: 0;
@@ -202,3 +206,4 @@ dialog.k small { color: var(--muted); font-size: 13px; }
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { animation: none !important; transition: none !important; }
 }
+.log { margin-bottom: 20px; word-break: break-all; }

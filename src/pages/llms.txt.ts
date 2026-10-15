@@ -1,6 +1,6 @@
 import { certs, domains, email, experience, github, projects, side, tools } from "../data/portfolio";
 
-const site = "https://qewertyy.dev";
+const site = "https://akhtark.dev";
 
 export function GET() {
   const body = [

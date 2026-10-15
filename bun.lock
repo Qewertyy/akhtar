@@ -2,7 +2,7 @@
   "lockfileVersion": 1,
   "workspaces": {
     "": {
-      "name": "qewertyy.dev",
+      "name": "akhtark.dev",
       "dependencies": {
         "astro": "^5.15.4",
       },

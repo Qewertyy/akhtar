@@ -212,7 +212,7 @@ export const domains = [
 
 export const tools = [
   { group: "Languages", items: "Go, TypeScript, JavaScript, Python, C#, Rust, Swift, Kotlin, Java, SQL, Ruby, PHP, GDScript" },
-  { group: "Backend", items: "Actix ,Node.js, Bun, Deno, Express, Hono, Axum, Fastify, Echo, ASP.NET Core, Django, Flask, gRPC, REST, WebSockets, Socket.IO" },
+  { group: "Backend", items: "Actix, Node.js, Bun, Deno, Express, Hono, Axum, Fastify, Echo, ASP.NET Core, Django, Flask, gRPC, REST, WebSockets, Socket.IO" },
   { group: "Web & mobile", items: "React, Next.js, Remix, Nuxt, Tailwind, React Native, Expo, SwiftUI, Live Activities" },
   { group: "Data", items: "PostgreSQL, MySQL, MS SQL Server, MongoDB, DynamoDB, Redis, Qdrant, Neo4j, Elasticsearch" },
   { group: "Infra", items: "Docker, AWS, GCP, Cloudflare, Nginx, Temporal, BullMQ, Kafka" },

@@ -11,7 +11,7 @@ interface Props {
 const { title: rawTitle, description: rawDescription } = Astro.props;
 const title = rawTitle.toLowerCase();
 const description = rawDescription.toLowerCase();
-const canonical = new URL(Astro.url.pathname, "https://qewertyy.dev");
+const canonical = new URL(Astro.url.pathname, "https://akhtark.dev");
 
 const commands = [
   ...projects.map((p) => ({ label: p.name, hint: p.kind, group: "Work", href: `/work/${p.slug}/` })),
@@ -37,6 +37,7 @@ const commands = [
     <meta property="og:url" content={canonical} />
     <link rel="canonical" href={canonical} />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500&family=Geist+Mono&display=swap" rel="stylesheet" />
@@ -132,6 +133,20 @@ const commands = [
         if (href!.endsWith(".pdf") || href!.startsWith("http")) return window.open(href, "_blank");
         navigate(href!);
       }
+
+      // the router restores the old scroll position on load, so jump to the hash ourselves
+      document.addEventListener(
+        "astro:page-load",
+        () => {
+          const target = location.hash && document.getElementById(decodeURIComponent(location.hash.slice(1)));
+          if (!target) return;
+          const smooth = !matchMedia("(prefers-reduced-motion: reduce)").matches;
+          document.fonts.ready.then(() =>
+            requestAnimationFrame(() => target.scrollIntoView({ behavior: smooth ? "smooth" : "auto" })),
+          );
+        },
+        { once: true },
+      );
 
       document.addEventListener("keydown", (e) => {
         if ((e.metaKey || e.ctrlKey) && e.key.toLowerCase() === "k") {

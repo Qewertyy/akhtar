@@ -1,0 +1,33 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+---
+
+<BaseLayout title="404 · Akhtar Khan" description="This page doesn't exist.">
+    <header class="intro fade" style="--i:0">
+        <h1>404</h1>
+        <p class="muted">No handler registered for this route</p>
+    </header>
+
+    <section class="fade" style="--i:1">
+        <p class="mono muted log">GET <span class="path">/</span> → 404 · 0.2ms</p>
+        <p>
+            I checked every route, the cache, and the cache behind the cache. Nothing.
+            This page was renamed, deleted, or only ever existed in a typo.
+        </p>
+        <p class="muted">At least it failed fast.</p>
+    </section>
+
+    <section class="fade" style="--i:2">
+        <p>
+            <a href="/">← Back home</a>
+            <span class="muted"> or press <kbd>⌘</kbd><kbd>K</kbd> to jump somewhere real.</span>
+        </p>
+    </section>
+
+    <script>
+        document.addEventListener("astro:page-load", () => {
+            const el = document.querySelector(".path");
+            if (el) el.textContent = location.pathname;
+        });
+    </script>
+</BaseLayout>
