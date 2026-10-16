@@ -189,7 +189,7 @@ dialog.k small { color: var(--muted); font-size: 13px; }
 .toast.on { opacity: 1; translate: -50% 0; }
 
 /* entrance */
-.fade { animation: rise 0.6s cubic-bezier(0.2, 0, 0, 1) both; animation-delay: calc(var(--i) * 70ms); }
+.fade { animation: rise 0.6s cubic-bezier(0.2, 0, 0, 1) backwards; animation-delay: calc(var(--i) * 70ms); }
 @keyframes rise { from { opacity: 0; translate: 0 8px; filter: blur(3px); } }
 
 @media (max-width: 520px) {
