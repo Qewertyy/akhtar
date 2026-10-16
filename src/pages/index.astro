@@ -1,6 +1,7 @@
 ---
 import BaseLayout from "../layouts/BaseLayout.astro";
 import {
+    cal,
     certs,
     domains,
     email,
@@ -30,7 +31,9 @@ const highlights = projects.flatMap((p) =>
             Founding backend engineer at <a href="/work/ryvn/">Ryvn</a>
         </p>
         <p class="stats mono muted">
-            {stats.map((x) => <span>{x}</span>)}
+            {stats.map((x) => (
+                <span>{x}</span>
+            ))}
         </p>
     </header>
 
@@ -38,14 +41,14 @@ const highlights = projects.flatMap((p) =>
         <p>
             I'm a backend engineer working on distributed services, AI agents
             and real-time systems, mostly in Go, TypeScript and Python. I care
-            about latency, clear boundaries between services, and going down
-            to the native layer when a feature needs it.
+            about latency, clear boundaries between services, and going down to
+            the native layer when a feature needs it.
         </p>
         <p>
             I'm currently a founding engineer at Ryvn. Before that I worked at
             Infloso AI and Finportal, and built a few products on the side. A
-            background in application security keeps auth and abuse cases in
-            the design from the start.
+            background in application security keeps auth and abuse cases in the
+            design from the start.
         </p>
         <p>
             Outside of work I keep picking up new things. I've made small games
@@ -57,6 +60,12 @@ const highlights = projects.flatMap((p) =>
             <span class="dot" aria-hidden="true"></span>
             Open to early-stage startup roles · Mumbai,{" "}
             <time class="clock">--:--</time> IST
+            <span class="nowrap">
+                ·{" "}
+                <a href={cal} target="_blank" rel="noreferrer">
+                    book a call ↗
+                </a>
+            </span>
         </p>
     </section>
 
@@ -67,8 +76,16 @@ const highlights = projects.flatMap((p) =>
                 <li>
                     <a href={`/work/${p.slug}/`} data-preview={p.preview}>
                         <span class="name">
-                            <img class="icon" src={p.icon} alt="" width="20" height="20" />
-                            <span transition:name={`title-${p.slug}`}>{p.name}</span>
+                            <img
+                                class="icon"
+                                src={p.icon}
+                                alt=""
+                                width="20"
+                                height="20"
+                            />
+                            <span transition:name={`title-${p.slug}`}>
+                                {p.name}
+                            </span>
                         </span>
                         <span class="muted">{p.kind}</span>
                     </a>
@@ -174,9 +191,19 @@ const highlights = projects.flatMap((p) =>
     <section class="fade" style="--i:7" aria-labelledby="contact">
         <h2 id="contact">Contact</h2>
         <p>
-            The best way to reach me is <a href={`mailto:${email}`} data-copy={email}>email</a>.
-            You can also find me on <a href={github} target="_blank" rel="noreferrer">GitHub</a>
-            or read my <a href={resume} target="_blank">resume</a>.
+            The best way to reach me is{" "}
+            <a href={`mailto:${email}`} data-copy={email}>
+                email
+            </a>
+            , or{" "}
+            <a href={cal} target="_blank" rel="noreferrer">
+                book a 15-min call
+            </a>{" "}
+            if you'd rather talk. You can also find me on{" "}
+            <a href={github} target="_blank" rel="noreferrer">
+                GitHub.
+            </a>
+            <!-- or read my <a href={resume} target="_blank">resume</a>. -->
         </p>
     </section>
 
@@ -224,7 +251,10 @@ const highlights = projects.flatMap((p) =>
                 .forEach((a) => {
                     a.addEventListener("mouseenter", (e) => {
                         img.src = a.dataset.preview!;
-                        img.classList.toggle("is-icon", img.src.includes("/icon."));
+                        img.classList.toggle(
+                            "is-icon",
+                            img.src.includes("/icon."),
+                        );
                         if (!raf) {
                             cx = x = e.clientX + 24;
                             cy = y = e.clientY - 80;

@@ -1,7 +1,7 @@
 ---
 import { ClientRouter } from "astro:transitions";
 import "../styles/global.css";
-import { email, github, projects, resume } from "../data/portfolio";
+import { cal, email, github, projects, resume } from "../data/portfolio";
 
 interface Props {
   title: string;
@@ -21,6 +21,7 @@ const commands = [
   { label: "Languages & tools", hint: "", group: "Go to", href: "/#tools" },
   { label: "Copy email", hint: email, group: "Contact", action: "copy" },
   { label: "Resume", hint: "PDF", group: "Contact", href: resume },
+  { label: "Book a call", hint: "15 min", group: "Contact", href: cal },
   { label: "GitHub", hint: "@qewertyy", group: "Contact", href: github },
   { label: "Toggle theme", hint: "", group: "Settings", action: "theme" },
 ];

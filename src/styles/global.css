@@ -207,3 +207,4 @@ dialog.k small { color: var(--muted); font-size: 13px; }
   *, *::before, *::after { animation: none !important; transition: none !important; }
 }
 .log { margin-bottom: 20px; word-break: break-all; }
+.nowrap { white-space: nowrap; }

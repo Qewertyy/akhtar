@@ -1,4 +1,4 @@
-import { certs, domains, email, experience, github, projects, side, tools } from "../data/portfolio";
+import { cal, certs, domains, email, experience, github, projects, side, tools } from "../data/portfolio";
 
 const site = "https://akhtark.dev";
 
@@ -40,6 +40,7 @@ export function GET() {
     `- [Resume (PDF)](${site}/resume/akhtar-khan-resume.pdf)`,
     `- [GitHub](${github})`,
     `- [Email](mailto:${email})`,
+    `- [Book a 15-min call](${cal})`,
     "",
     "## Optional",
     "",

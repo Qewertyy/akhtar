@@ -19,6 +19,7 @@ export type Project = {
 
 export const email = "akhtar.khn.irl@gmail.com";
 export const github = "https://github.com/qewertyy";
+export const cal = "https://cal.com/akhtark/15min";
 export const resume = "/resume/akhtar-khan-resume.pdf";
 
 export const projects: Project[] = [
